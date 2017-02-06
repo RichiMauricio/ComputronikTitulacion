@@ -36,6 +36,7 @@ public class ordenController {
     @Transactional(readOnly=true)
     public String showOrden(@PathVariable Integer idOrden,@PathVariable Integer fkCliId, Model model){
         model.addAttribute("ordenes",ordenService.findByordNumero(idOrden));
+
         model.addAttribute("clientes",clienteService.getClientebyId(fkCliId));
         return "ordenSola";
     }
