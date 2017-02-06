@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Proyecto de titulación</title>
+    <meta http-equiv="content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/indexVista.css"
+          th:href="@{css/indexVista.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/computronik-0.0.1-SNAPSHOT">Inicio</a>
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="${'/computronik-0.0.1-SNAPSHOT/ordenShow'}">Lista de Órdenes</a></li>
+                        <li><a th:href="${'/computronik-0.0.1-SNAPSHOT/ordenAdd'}">Nueva Orden</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="row text-center">
+                <div class="">
+                    <title>HAMP</title>
+                </div>
+            </div>
+            <div class="row text-center">
+                <img src="../static/images/computronik.png" width="1000"
+                     th:src="@{/images/computronik.png}"/>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

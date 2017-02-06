@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clientes</title>
+    <meta charset="UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" rel="stylesheet" media="screen" />
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+</head>
+<body>
+    <h1>Clientes</h1>
+        <table>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.cliCedula}">Cédula</td>
+                <td th:text="${cliente.cliNombres}">Nombres</td>
+                <td th:text="${cliente.cliDireccion}">Dirección</td>
+            </tr>
+        </table>
+</body>
+</html>
