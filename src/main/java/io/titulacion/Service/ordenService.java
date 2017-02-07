@@ -29,4 +29,8 @@ public class ordenService {
     public orden saveOrden(orden orden){
         return ordenRepository.save(orden);
     }
+
+    public int findfkCliId(orden orden){
+        return orden.getFkCliId();
+    }
 }

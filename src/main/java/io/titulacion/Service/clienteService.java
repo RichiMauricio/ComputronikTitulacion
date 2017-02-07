@@ -33,8 +33,9 @@ public class clienteService{
         return clienteRepository.findAll();
     }
 
-    public cliente getClientebyId(int id){
-        return clienteRepository.findByCliId(id);
+    public cliente getClientebyId(orden orden){
+        int fkCli=orden.getFkCliId();
+        return clienteRepository.findByCliId(fkCli);
     }
 
     public cliente getClienteByCedula(String cedula){

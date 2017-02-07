@@ -5,6 +5,7 @@ import io.titulacion.Model.orden;
 import io.titulacion.Service.ordenService;
 import io.titulacion.Service.clienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -32,14 +33,14 @@ public class ordenController {
         return "ordenShow";
     }
 
-    @RequestMapping(value="/orden/{idOrden}/{fkCliId}", method= RequestMethod.GET)
+    /*@RequestMapping(value="/orden/{idOrden}/{fkCliId}", method= RequestMethod.GET)
     @Transactional(readOnly=true)
     public String showOrden(@PathVariable Integer idOrden,@PathVariable Integer fkCliId, Model model){
         model.addAttribute("ordenes",ordenService.findByordNumero(idOrden));
 
         model.addAttribute("clientes",clienteService.getClientebyId(fkCliId));
         return "ordenSola";
-    }
+    }*/
 
     @RequestMapping(value="/ordenAdd")
     public String newOrden(Model model){
@@ -53,4 +54,11 @@ public class ordenController {
         return "redirect:/orden/"+ orden.getOrdNumero()+"/"+orden.getFkCliId();
     }
 
+    @RequestMapping(value="/orden/{idOrden}", method= RequestMethod.GET)
+    @Transactional(readOnly=true)
+    public String showOrden(@PathVariable Integer idorden, Model model){
+        model.addAttribute("ordenes",ordenService.findByordNumero(idorden));
+        model.addAttribute("clientes",clienteService.getClientebyId(ordenService.findByordNumero(idorden)));
+        return "ordenSola";
+    }
 }

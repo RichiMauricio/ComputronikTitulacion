@@ -11,5 +11,4 @@ import java.io.Serializable;
  * Created by Mauricio on 31/01/2017.
  */
 public interface ordenRepository extends JpaRepository <orden,Integer>, Serializable {
-
 }
