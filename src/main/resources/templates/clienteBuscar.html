@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Lista de órdenes</title>
+    <title>Nueva orden</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" rel="stylesheet" media="screen" />
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
@@ -30,36 +30,26 @@
         </div>
         <div class="row text-center">
             <img src="../static/images/computronik.png" width="1000"
-                 th:src="@{images/computronik.png}"/>
+                 th:src="@{/images/computronik.png}"/>
         </div>
     </div>
-    <h2>Lista de Órdenes</h2>
-    <table class="table table-striped">
-        <tr>
-            <th>Número</th>
-            <th>Fecha</th>
-            <th>Problema</th>
-            <th>Diagnóstico</th>
-            <th>Estado</th>
-            <th>Ver</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-        </tr>
-        <tr th:each="orden : ${ordenes}">
-            <td th:text="${orden.ordNumero}">Número de orden</td>
-            <td th:text="${orden.ordFechaEmision}">Fecha</td>
-            <td th:text="${orden.ordProblema}">Problema</td>
-            <td th:text="${orden.ordDiagnostico}">Diagnóstico</td>
-            <div th:switch="${orden.fkEstCodigo}">
-                <td th:case="'1'">Ingresado</td>
-                <td th:case="'2'">En reparación</td>
-                <td th:case="'3'">Finalizado</td>
+    <h2>Nueva Orden</h2>
+    <h3>Datos Cliente</h3>
+    <div>
+        <form class="form-horizontal" action="#" method="get">
+            <input type="hidden" id="cliId" name="cliId" value="" />
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Cedula:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="cliCedula" name="cliCedula" placeholder="Número de cédula"  required="true"/>
+                </div>
             </div>
-            <td ><a th:href="${'/computronik-0.0.1-SNAPSHOT/orden/'+ orden.ordNumero}">Ver</a></td>
-            <td ><a th:href="${'/computronik-0.0.1-SNAPSHOT/orden/edit/'+ orden.ordNumero}">Editar</a></td>
-            <td ><a th:href="${'/computronik-0.0.1-SNAPSHOT/orden/delete/'+ orden.ordNumero}">Eliminar</a></td>
-        </tr>
-    </table>
+            <div class="row">
+                <input type="button" name="boton" value="Buscar" onclick="buscarTexto('ordenAdd/clienteShow.html','cliCedula')"/>
+            </div>
+        </form>
+    </div>
 </div>
+<script th:src="@{javaScript/ordenAdd.js}"></script>
 </body>
 </html>

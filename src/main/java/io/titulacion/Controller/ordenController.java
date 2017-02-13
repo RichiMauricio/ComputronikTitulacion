@@ -1,18 +1,21 @@
 package io.titulacion.Controller;
 
-import io.titulacion.Model.cliente;
 import io.titulacion.Model.orden;
+import io.titulacion.Model.estado;
 import io.titulacion.Service.ordenService;
 import io.titulacion.Service.clienteService;
+import io.titulacion.Service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Mauricio on 31/01/2017.
@@ -26,39 +29,69 @@ public class ordenController {
     @Autowired
     private clienteService clienteService;
 
-    @RequestMapping(value="/ordenShow", method= RequestMethod.GET)
-    @Transactional(readOnly=true)
-    public String list(Model model){
+    @Autowired
+    private EstadoService estadoService;
+
+    @RequestMapping(value = "/ordenShow", method = RequestMethod.GET)
+    @Transactional(readOnly = true)
+    public String list(Model model) {
         model.addAttribute("ordenes", ordenService.getAll());
         return "ordenShow";
     }
 
-    /*@RequestMapping(value="/orden/{idOrden}/{fkCliId}", method= RequestMethod.GET)
-    @Transactional(readOnly=true)
-    public String showOrden(@PathVariable Integer idOrden,@PathVariable Integer fkCliId, Model model){
-        model.addAttribute("ordenes",ordenService.findByordNumero(idOrden));
-
-        model.addAttribute("clientes",clienteService.getClientebyId(fkCliId));
+    @RequestMapping(value = "/orden/{ordNumero}", method = RequestMethod.GET)
+    @Transactional(readOnly = true)
+    public String showOrden(@PathVariable Integer ordNumero, Model model) {
+        model.addAttribute("ordenes", ordenService.findByordNumero(ordNumero));
+        model.addAttribute("clientes", clienteService.getClientebyId(ordenService.findByordNumero(ordNumero)));
+        model.addAttribute("estado", estadoService.getEstadobyId(ordenService.findByordNumero(ordNumero)));
         return "ordenSola";
-    }*/
+    }
 
-    @RequestMapping(value="/ordenAdd")
-    public String newOrden(Model model){
-        model.addAttribute("orden",new orden());
+    @RequestMapping(value = "/ordenAdd")
+    public String newOrden(Model model) {
+        return "clienteBuscar";
+    }
+
+    //Formulario de añadir orden
+    @RequestMapping(value = "ordenAdd/ordenAddCli/{cliId}", method = RequestMethod.GET)
+    public String newOrden(Model model, @PathVariable int cliId) {
+        model.addAttribute("orden", new orden());
         return "ordenAdd";
     }
 
-    @RequestMapping(value="orden", method = RequestMethod.POST)
-    public String saveOrden(orden orden){
-        ordenService.saveOrden(orden);
-        return "redirect:/orden/"+ orden.getOrdNumero()+"/"+orden.getFkCliId();
+    //Editar una orden
+    @Transactional(readOnly = false)
+    @RequestMapping(value = "/orden/edit/{ordNumero}")
+    public String editOrden(@PathVariable Integer ordNumero, Model model) {
+        model.addAttribute("orden", ordenService.findByordNumero(ordNumero));
+        return "ordenAdd";
     }
 
-    @RequestMapping(value="/orden/{idOrden}", method= RequestMethod.GET)
-    @Transactional(readOnly=true)
-    public String showOrden(@PathVariable Integer idorden, Model model){
-        model.addAttribute("ordenes",ordenService.findByordNumero(idorden));
-        model.addAttribute("clientes",clienteService.getClientebyId(ordenService.findByordNumero(idorden)));
-        return "ordenSola";
+    //Añadir nueva orden con el id del cliente
+    @Transactional(readOnly = false)
+    @RequestMapping(value = "/ordenAdd", method = RequestMethod.POST)
+    public String saveOrden(@Valid orden orden, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "ordenAdd";
+        }else {
+            ordenService.saveOrden(orden);
+            return "redirect:/ordenShow";
+        }
     }
+
+    //Borrar una orden
+    @Transactional(readOnly = false)
+    @RequestMapping(value = "/orden/delete/{ordNumero}")
+    public String editOrden(@PathVariable Integer ordNumero) {
+        ordenService.deleteOrden(ordNumero);
+        return "redirect:/ordenShow";
+    }
+
+    //Lista de estados para la orden
+    @ModelAttribute("allEstados")
+    public List<estado> populateTypes() {
+        return estadoService.gelAll();
+    }
+
 }

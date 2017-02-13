@@ -18,8 +18,7 @@ public class clienteService{
     @Autowired
     clienteRepository clienteRepository;
 
-    @Transactional(readOnly = false)
-    public boolean addCliente(cliente cl) throws Exception {
+    /*public boolean addCliente(cliente cl) throws Exception {
         cliente antiguo = clienteRepository.findByCliCedula(cl.getCliCedula());
         if (antiguo!=null){
             throw new Exception("Ya existe ese cliente");
@@ -27,7 +26,7 @@ public class clienteService{
             clienteRepository.save(cl);
         }
         return true;
-    }
+    }*/
 
     public List<cliente> getAll(){
         return clienteRepository.findAll();
@@ -38,7 +37,16 @@ public class clienteService{
         return clienteRepository.findByCliId(fkCli);
     }
 
-    public cliente getClienteByCedula(String cedula){
+    public cliente getClienteByCedula(String cedula) throws Exception {
         return clienteRepository.findByCliCedula(cedula);
+    }
+
+    public cliente getClienteById(Integer cliId){
+        return clienteRepository.findByCliId(cliId);
+    }
+
+    @Transactional(readOnly = false)
+    public cliente saveCliente(cliente cliente){
+        return clienteRepository.save(cliente);
     }
 }

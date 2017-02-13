@@ -14,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Created by Mauricio on 30/12/2016.
  */
 @Entity
-@Table(name = "perfiles")
+@Table(name = "Perfil")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

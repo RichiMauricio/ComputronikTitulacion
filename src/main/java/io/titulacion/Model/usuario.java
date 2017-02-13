@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Created by Mauricio on 07/01/2017.
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "Usuario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

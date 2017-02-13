@@ -20,7 +20,6 @@ public class indexController {
 
     @RequestMapping("/")
     public String index() {
-        //model.addAttribute("name", name);
         return "index";
     }
 }

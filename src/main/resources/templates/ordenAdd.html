@@ -33,61 +33,54 @@
                  th:src="@{/images/computronik.png}"/>
         </div>
     </div>
-    <h2>Nueva Orden</h2>
-    <h3>Datos Cliente</h3>
+    <h3>Datos Orden</h3>
     <div>
-        <form class="form-horizontal" method="post" action="/cliente">
-            <input type="hidden" id="cliId" name="cliId" value="" />
-
+        <form class="form-horizontal" th:object="${orden}" method="post" th:action="@{/ordenAdd}">
+            <input type="hidden" th:field="*{ordNumero}" id="txtordNum"/>
+            <input type="hidden" th:field="*{fkCliId}" id="txtCliId"/>
+            <script>
+                (function getCliId() {
+                    var loc = document.location.href;
+                    var getString = loc.split('/');
+                    if (getString[getString.length-2]=='edit'){
+                        var ordNum=getString[getString.length-1];
+                        var txtOrdNum = document.getElementById('txtOrdNum');
+                        console.log(getString[getString.length-2]);
+                        txtOrdNum.value=ordNum;
+                    }else {
+                        var cliId=getString[getString.length-1];
+                        var txtcliId = document.getElementById('txtCliId');
+                        console.log(cliId);
+                        txtcliId.value=cliId;
+                    }
+                })();
+            </script>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Cedula:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cliCedula" name="cliCedula" value="" />
+                    <input type="datetime-local" class="form-control" id="ordFecha" th:field="*{ordFechaEmision}" placeholder="Fecha"  required="true"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Nombres:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cliNombres" name="cliNombres" value="" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Telefono:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cliTelefono" name="cliTelefono" value="" />
-                </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-default">Buscar</button>
-                <button type="submit" class="btn btn-default">Registrar</button>
-            </div>
-        </form>
-    </div>
-    <h3>Datos Orden</h3>
-    <div>
-        <form class="form-horizontal" method="post" action="/orden">
-            <input type="hidden" id="ordNumero" name="ordNumero" value="" />
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Fecha:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ordFecha" name="ordFecha" value="" />
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-2 control-label">Problema:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ordProblema" name="ordProblema" value="" />
+                    <input type="text" class="form-control" id="ordProblema" th:field="*{ordProblema}" placeholder="Problema"  required="true"/>
                 </div>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-2 control-label">Diagnóstico:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ordDiagnostico" name="ordDiagnostico" value="" />
+                    <input type="text" class="form-control" id="ordDiagnostico" th:field="*{ordDiagnostico}" placeholder="Diagnóstico"/>
+                </div>
+                <label class="col-sm-2 control-label">Empleado:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="fkEmpId" th:field="*{fkEmpId}" required="true" placeholder="Código del empleado"/>
+                </div>
+                <label class="col-sm-2 control-label">Estado:</label>
+                <div class="col-sm-10">
+                    <select th:field="*{fkEstCodigo}">
+                        <option th:each="estado: ${allEstados}" th:value="${estado.estCodigo}" th:text="${estado.estDescripcion}"></option>
+                    </select>
                 </div>
             </div>
             <div class="row">
-                <button type="submit" class="btn btn-default">Registro</button>
+                <button type="submit">Guardar</button>
             </div>
         </form>
     </div>

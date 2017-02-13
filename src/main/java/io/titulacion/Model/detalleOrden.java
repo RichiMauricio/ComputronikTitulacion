@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Created by Mauricio on 02/01/2017.
  */
 @Entity
-@Table(name = "detalleOrden")
+@Table(name = "DetalleOrden")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +23,7 @@ public class detalleOrden {
     private Integer detNumero;
     @Column(name = "detPrecioTotal", unique = false, nullable = false)
     private Double detPrecioTotal;
-    @Column(name = "fkOrdNumero", unique = false, nullable = false)
+    @Column(name = "fkOrdNumero", unique = false, nullable = true)
     private Integer fkOrdNumero;
     @Column(name = "fkServCodigo", unique = false, nullable = false)
     private Integer fkServCodigo;

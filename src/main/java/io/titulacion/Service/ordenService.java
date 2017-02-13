@@ -1,7 +1,9 @@
 package io.titulacion.Service;
 
+
 import io.titulacion.Model.cliente;
 import io.titulacion.Model.orden;
+import io.titulacion.Repository.clienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +28,13 @@ public class ordenService {
         return ordenRepository.getOne(id);
     }
 
+    @Transactional(readOnly = false)
     public orden saveOrden(orden orden){
         return ordenRepository.save(orden);
     }
 
-    public int findfkCliId(orden orden){
-        return orden.getFkCliId();
+    @Transactional(readOnly = false)
+    public void deleteOrden(int ordNumero){
+        ordenRepository.delete(ordNumero);
     }
 }
