@@ -22,4 +22,15 @@ public class indexController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/contacto")
+    public String contacto() {
+        return "contacto";
+    }
+
+    // Login form
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
 }

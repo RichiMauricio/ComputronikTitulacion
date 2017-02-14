@@ -25,7 +25,7 @@ public class servicio {
     private Integer servCodigo;
     @Column(name = "servDescripcion", unique = false, nullable = false)
     private String servDescripcion;
-    @Column(name = "servPrecio", unique = false, nullable = false)
+    @Column(name = "servPrecio", unique = false, nullable = true)
     private Double servPrecio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkServCodigo")
     private List<detalleOrden> detalleOrden;

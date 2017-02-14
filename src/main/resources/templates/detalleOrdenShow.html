@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Nueva orden</title>
+    <title>Lista de detalles</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" rel="stylesheet" media="screen" />
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
@@ -31,26 +31,28 @@
         </div>
         <div class="row text-center">
             <img src="../static/images/computronik.png" width="1000"
-                 th:src="@{/images/computronik.png}"/>
+                 th:src="@{images/computronik.png}"/>
         </div>
     </div>
-    <h2>Nueva Orden</h2>
-    <h3>Datos Cliente</h3>
-    <div>
-        <form class="form-horizontal" action="#" method="get">
-            <input type="hidden" id="cliId" name="cliId" value="" />
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Cedula:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cliCedula" name="cliCedula" placeholder="Número de cédula"  required="true"/>
-                </div>
+    <h2>Lista de Detalle de órdenes</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Número de detalle</th>
+            <th>Número de orden</th>
+            <th>Servicio</th>
+            <th>Eliminar</th>
+        </tr>
+        <tr th:each="detalleOrden : ${detalleOrden}">
+            <td th:text="${detalleOrden.detNumero}">Número de detalle</td>
+            <td th:text="${detalleOrden.fkOrdNumero}">Número de orden</td>
+            <div th:switch="${detalleOrden.fkServCodigo}">
+                <td th:case="'1'">Diagnóstico</td>
+                <td th:case="'2'">Mantenimiento</td>
+                <td th:case="'3'">Otros</td>
             </div>
-            <div class="row">
-                <input type="button" name="boton" value="Buscar" onclick="buscarTexto('ordenAdd/clienteShow.html','cliCedula')"/>
-            </div>
-        </form>
-    </div>
+            <td ><a th:href="${'/computronik-0.0.1-SNAPSHOT/detalleOrden/delete/'+ detalleOrden.detNumero}">Eliminar</a></td>
+        </tr>
+    </table>
 </div>
-<script th:src="@{javaScript/ordenAdd.js}"></script>
 </body>
 </html>

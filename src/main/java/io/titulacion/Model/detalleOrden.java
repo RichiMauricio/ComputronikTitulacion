@@ -21,10 +21,10 @@ public class detalleOrden {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "detNumero", unique = true, nullable = false)
     private Integer detNumero;
-    @Column(name = "detPrecioTotal", unique = false, nullable = false)
+    @Column(name = "detPrecioTotal", unique = false, nullable = true)
     private Double detPrecioTotal;
     @Column(name = "fkOrdNumero", unique = false, nullable = true)
     private Integer fkOrdNumero;
-    @Column(name = "fkServCodigo", unique = false, nullable = false)
+    @Column(name = "fkServCodigo", unique = false, nullable = true)
     private Integer fkServCodigo;
 }

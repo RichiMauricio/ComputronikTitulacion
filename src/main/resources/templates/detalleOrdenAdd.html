@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Nueva orden</title>
+    <title>Detalle de orden</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" rel="stylesheet" media="screen" />
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
@@ -34,23 +34,32 @@
                  th:src="@{/images/computronik.png}"/>
         </div>
     </div>
-    <h2>Nueva Orden</h2>
-    <h3>Datos Cliente</h3>
+    <h3>Detalle de la orden</h3>
     <div>
-        <form class="form-horizontal" action="#" method="get">
-            <input type="hidden" id="cliId" name="cliId" value="" />
+        <form class="form-horizontal" th:object="${detalleOrden}" method="post" th:action="@{/detalleOrdenAdd}">
+            <input type="hidden" th:field="*{detNumero}" id="txtdetOrdNumero"/>
+            <input type="hidden" th:field="*{fkOrdNumero}" id="txtfkordNumero"/>
+            <script>
+                (function getCliId() {
+                    var loc = document.location.href;
+                    var getString = loc.split('/');
+                    var ordNum=getString[getString.length-1];
+                    var fkOrdNumero = document.getElementById('txtfkordNumero');
+                    fkOrdNumero.value=ordNum;
+                })();
+            </script>
             <div class="form-group">
-                <label class="col-sm-2 control-label">Cedula:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cliCedula" name="cliCedula" placeholder="Número de cédula"  required="true"/>
+                    <select th:field="*{fkServCodigo}">
+                        <option th:each="servicio: ${allServicios}" th:value="${servicio.servCodigo}" th:text="${servicio.servDescripcion}"></option>
+                    </select>
                 </div>
-            </div>
-            <div class="row">
-                <input type="button" name="boton" value="Buscar" onclick="buscarTexto('ordenAdd/clienteShow.html','cliCedula')"/>
+                <div class="row">
+                    <button type="submit">Guardar</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
-<script th:src="@{javaScript/ordenAdd.js}"></script>
 </body>
 </html>

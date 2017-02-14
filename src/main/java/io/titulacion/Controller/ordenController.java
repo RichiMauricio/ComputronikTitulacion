@@ -6,7 +6,6 @@ import io.titulacion.Service.ordenService;
 import io.titulacion.Service.clienteService;
 import io.titulacion.Service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -53,18 +52,18 @@ public class ordenController {
         return "clienteBuscar";
     }
 
-    //Formulario de añadir orden
-    @RequestMapping(value = "ordenAdd/ordenAddCli/{cliId}", method = RequestMethod.GET)
-    public String newOrden(Model model, @PathVariable int cliId) {
-        model.addAttribute("orden", new orden());
-        return "ordenAdd";
-    }
-
     //Editar una orden
     @Transactional(readOnly = false)
     @RequestMapping(value = "/orden/edit/{ordNumero}")
     public String editOrden(@PathVariable Integer ordNumero, Model model) {
         model.addAttribute("orden", ordenService.findByordNumero(ordNumero));
+        return "ordenAdd";
+    }
+
+    //Formulario de añadir orden
+    @RequestMapping(value = "ordenAdd/ordenAddCli/{cliId}", method = RequestMethod.GET)
+    public String newOrden(Model model, @PathVariable int cliId) {
+        model.addAttribute("orden", new orden());
         return "ordenAdd";
     }
 

@@ -33,23 +33,32 @@ public class ClienteController {
             model.addAttribute("clientes", clienteService.getClienteByCedula(cliCedula));
             return "clienteShow";
         }else {
-            return "redirect:/ordenAdd/clienteAdd";
+            return "redirect:/ordenAdd/clienteAdd/"+cliCedula;
         }
     }
 
-    @RequestMapping(value="ordenAdd/clienteAdd", method = RequestMethod.GET)
+    //Formulario de cliente
+    @RequestMapping(value="ordenAdd/clienteAdd/{cliCedula}", method = RequestMethod.GET)
     public String newCliente(Model model){
         model.addAttribute("cliente", new cliente());
         return "clienteAdd";
     }
 
+    //Guardar un nuevo cliente
     @RequestMapping(value = "/clienteAdd", method = RequestMethod.POST)
-    public String saveCliente(@Valid cliente cliente, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "clienteAdd";
-        }else {
-            clienteService.saveCliente(cliente);
-            return "redirect:/ordenAdd/ordenAddCli/"+cliente.getCliId();
+    public String saveCliente(@Valid cliente cliente, BindingResult bindingResult) throws Exception {
+        cliente yaExiste = clienteService.getClienteByCedula(cliente.getCliCedula());
+        boolean cliDuplicado = clienteService.verificarCliente(cliente.getCliCedula());
+        if ((cliDuplicado==false)){
+            if ((bindingResult.hasErrors())||(yaExiste!=null)){
+                return "clienteAdd";
+            }else{
+                clienteService.saveCliente(cliente);
+                return "redirect:/ordenAdd/ordenAddCli/"+cliente.getCliId();
+                }
+            }
+        else {
+            return "redirect:/ordenShow";
         }
     }
 }

@@ -23,24 +23,22 @@ import static org.hibernate.criterion.Restrictions.and;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    /*@Autowired
+    private UserDetailsService userDetailsService;*/
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-                .antMatchers("/index").access("hasRole('ROLE_ADMIN')")
-            .and()
                 .formLogin()
-                .loginPage("/login").usernameParameter("username").passwordParameter("password");
+                .loginPage("/login.html")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/index.html");
     }
 
     @Autowired
-    public void confidAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth
         /*auth
                 .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
                 .and()
@@ -48,12 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .dataSource(dataSource)
                 .usersByUsernameQuery(sqlUserName)
                 .authoritiesByUsernameQuery(sqlAuthorities);
-                .inMemoryAuthentication()
-                .withUser("richi").password("richi").roles("ADMIN");*/
+                */
+        .inMemoryAuthentication()
+                .withUser("richi").password("richi").roles("ADMIN");
     }
 
-    @Bean(name = "passwordEncoder")
+    /*@Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    }
+    }*/
 }
