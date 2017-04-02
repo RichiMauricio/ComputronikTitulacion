@@ -28,7 +28,7 @@ public class cliente {
     private String cliNombres;
     @Column(name = "cliDireccion", unique = false, nullable = false)
     private String cliDireccion;
-    @Column(name = "cliEmail", unique = true, nullable = false)
+    @Column(name = "cliEmail", unique = false, nullable = false)
     private String cliEmail;
     @Column(name = "cliTelefono", unique = false, nullable = true)
     private String cliTelefono;

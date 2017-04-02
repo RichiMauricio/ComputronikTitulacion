@@ -28,8 +28,14 @@ public class DetalleOrdenService {
         return detalleOrdenRepository.findAll();
     }
 
+    //Borrar todos los detalles de la orden
     @Transactional(readOnly = false)
     public void deleteDetalleOrden(int ordNumero){
         detalleOrdenRepository.delete(ordNumero);
     }
+
+    /*public List<detalleOrden> getAll(Integer ordNumero){
+        return detalleOrdenRepository.findByOrdNumero(ordNumero);
+    }*/
+
 }
